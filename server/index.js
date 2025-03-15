@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
       console.log(`User ${socket.id} joined room: ${room}`);
 
       const response = await fetch(`https://legacychatapp-1.onrender.com/api/messages/${room}`);
-      https://legacychatapp-1.onrender.com
+      
       const data = await response.json();
 
       socket.emit("previousMessages", data.data);
