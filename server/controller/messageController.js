@@ -21,8 +21,10 @@ exports.saveMessage = async (req, res) => {
 // Get messages for a specific room
 exports.getRoomMessages = async (req, res) => {
   try {
-    const { room } = req.params;
-    const messages = await Message.find({ room }).sort("timestamp");
+    const { room} = req.params;
+
+    const roomToLowerCase = room.toLowerCase();
+    const messages = await Message.find({ room: roomToLowerCase }).sort("timestamp");
 
     res.status(200).json({ 
         success: true, 
