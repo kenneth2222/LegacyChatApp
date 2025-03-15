@@ -3,9 +3,9 @@ const Message = require("../model/message");
 // Save a message
 exports.saveMessage = async (req, res) => {
   try {
-    const { room, sender, message } = req.body;
+    const { roomPayload, sender, message } = req.body;
 
-    const newMessage = new Message({ room, sender, message });
+    const newMessage = new Message({ room: roomPayload.toLowerCase(), sender, message });
     await newMessage.save();
 
     res.status(201).json({ success: true, 
