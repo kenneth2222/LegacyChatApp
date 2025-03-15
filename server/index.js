@@ -13,11 +13,11 @@ const server = http.createServer(app);
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 
-// Register REST API routes
-app.use("/api", messageRoutes);
 app.get("/", (req, res) => {
   res.send("Hello World!");
 })
+// Register REST API routes
+app.use("/api", messageRoutes);
 
 const io = new Server(server, { cors: { origin: "*" } });
 
