@@ -5,35 +5,60 @@ exports.saveMessage = async (req, res) => {
   try {
     const { roomPayload, sender, message } = req.body;
 
-    const newMessage = new Message({ room: roomPayload.toLowerCase(), sender, message });
+    if (!roomPayload || !sender || !message) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields (room, sender, message) are required",
+      });
+    }
+
+    const newMessage = new Message({
+      room: roomPayload.toLowerCase(),
+      sender,
+      message,
+      timestamp: new Date(), // Ensure timestamp is stored
+    });
+
     await newMessage.save();
 
-    res.status(201).json({ success: true, 
-        message: "Message saved", 
-        data: newMessage });
+    res.status(201).json({
+      success: true,
+      message: "Message saved",
+      data: newMessage,
+    });
   } catch (error) {
-    res.status(500).json({ 
-        success: false, 
-        message: "Error saving message" + error.message });
+    console.error("Error saving message:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error saving message: " + error.message,
+    });
   }
 };
 
 // Get messages for a specific room
 exports.getRoomMessages = async (req, res) => {
   try {
-    const { room} = req.params;
+    const { room } = req.params;
+
+    if (!room) {
+      return res.status(400).json({
+        success: false,
+        message: "Room parameter is required",
+      });
+    }
 
     const roomToLowerCase = room.toLowerCase();
-    const messages = await Message.find({ room: roomToLowerCase }).sort("timestamp");
+    const messages = await Message.find({ room: roomToLowerCase }).sort({ timestamp: 1 }); // Sort oldest to newest
 
-    res.status(200).json({ 
-        success: true, 
-        data: messages 
+    res.status(200).json({
+      success: true,
+      data: messages,
     });
   } catch (error) {
-    res.status(500).json({ 
-        success: false, 
-        message: "Error fetching messages" + error.message
+    console.error("Error fetching messages:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching messages: " + error.message,
     });
   }
 };
