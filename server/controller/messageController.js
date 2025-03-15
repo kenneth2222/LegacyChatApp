@@ -13,7 +13,8 @@ exports.saveMessage = async (req, res) => {
     }
 
     const newMessage = new Message({
-      room: roomPayload.toLowerCase(),
+      // room: roomPayload.toLowerCase(),
+      room: roomPayload,
       sender,
       message,
       timestamp: new Date(), // Ensure timestamp is stored
@@ -47,8 +48,9 @@ exports.getRoomMessages = async (req, res) => {
       });
     }
 
-    const roomToLowerCase = room.toLowerCase();
-    const messages = await Message.find({ room: roomToLowerCase }).sort({ timestamp: 1 }); // Sort oldest to newest
+    // const roomToLowerCase = room.toLowerCase();
+    // const messages = await Message.find({ room: roomToLowerCase }).sort({ timestamp: 1 }); // Sort oldest to newest
+    const messages = await Message.find({ room }).sort({ timestamp: 1 }); // Sort oldest to newest
 
     res.status(200).json({
       success: true,
