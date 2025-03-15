@@ -1,24 +1,3 @@
-// const Message = require("../model/message");
-
-// exports.saveMessage = async (room, message, sender) => {
-//   try {
-//     const newMessage = new Message({ room, message, sender });
-//     await newMessage.save();
-//   } catch (err) {
-//     console.error("Error saving message:", err);
-//   }
-// };
-
-// exports.getRoomMessages = async (room) => {
-//   try {
-//     return await Message.find({ room }).sort({ timestamp: 1 });
-//   } catch (err) {
-//     console.error("Error fetching messages:", err);
-//     return [];
-//   }
-// };
-
-
 const Message = require("../model/message");
 
 // Save a message
