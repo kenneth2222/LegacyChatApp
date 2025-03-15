@@ -15,6 +15,9 @@ app.use(cors({ origin: "*" }));
 
 // Register REST API routes
 app.use("/api", messageRoutes);
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+})
 
 const io = new Server(server, { cors: { origin: "*" } });
 
