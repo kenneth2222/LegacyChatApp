@@ -3,9 +3,9 @@ const Message = require("../model/message");
 // Save a message
 exports.saveMessage = async (req, res) => {
   try {
-    const { roomPayload, sender, message } = req.body;
+    const { room, sender, message } = req.body;
 
-    if (!roomPayload || !sender || !message) {
+    if (!room || !sender || !message) {
       return res.status(400).json({
         success: false,
         message: "All fields (room, sender, message) are required",
@@ -14,13 +14,14 @@ exports.saveMessage = async (req, res) => {
 
     const newMessage = new Message({
       // room: roomPayload.toLowerCase(),
-      room: roomPayload,
+      room,
       sender,
       message,
       timestamp: new Date(), // Ensure timestamp is stored
     });
 
-    await newMessage.save();
+    const savedMessage = await newMessage.save();
+    console.log("Saved message:", savedMessage);
 
     res.status(201).json({
       success: true,
