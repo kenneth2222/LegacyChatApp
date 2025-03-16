@@ -5,6 +5,7 @@ import io from "socket.io-client";
 import "./App.css";
 
 // const socket = io.connect("http://localhost:8000");
+// const socket = io.connect("http://localhost:8000");
 const socket = io.connect("https://legacychatapp-1.onrender.com");
 
 const App = () => {
